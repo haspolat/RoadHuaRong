@@ -2,4 +2,5 @@
     <string name="app_name">RoadHuaRong</string>
     <string name="soldier1_description">soldier1</string>
     <string name="soldier2_description">soldier2 description</string>
+    <string name="success_button_text">确定</string>
 </resources>

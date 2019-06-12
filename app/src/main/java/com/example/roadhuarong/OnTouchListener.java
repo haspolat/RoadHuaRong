@@ -1,4 +1,5 @@
 package com.example.roadhuarong;
+
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -6,7 +7,7 @@ import android.widget.GridLayout;
 
 
 public class OnTouchListener implements View.OnTouchListener {
-    private static final float NULL = (float)-777;
+    private static final float NULL = (float) -777;
     float start_x, start_y, end_x, end_y;
     int from, to;
     GridLayout mlayout;
@@ -21,6 +22,7 @@ public class OnTouchListener implements View.OnTouchListener {
     public boolean onTouch(View v, MotionEvent event) {
         int action = event.getActionMasked();
         float margin = 30;
+//        View caocao = mlayout.findViewById(R.id.caocao);
         switch (action) {
             case MotionEvent.ACTION_DOWN:
                 mlayout = (GridLayout) v.getParent();
@@ -197,6 +199,7 @@ public class OnTouchListener implements View.OnTouchListener {
                 return false;
         }
     }
+
     void swap_view_horizantally(View v1, View v2) {
         if (from > to) {
             int tamp = from;
@@ -208,12 +211,29 @@ public class OnTouchListener implements View.OnTouchListener {
         }
 //        Log.d("test left right", Float.toString(v1.getRight()));
 //        Log.d("test left right", Float.toString(v2.getLeft()));
-        if(v1.getRight()==v2.getLeft()){
+        if (v1.getRight() == v2.getLeft()) {
             mlayout.removeView(v1);
             mlayout.removeView(v2);
             mlayout.addView(v2, from);
             mlayout.addView(v1, to);
+            if (v1.getId() == R.id.caocao) {
+                if (v1.getBottom() == mlayout.getBottom())
+                    if (v1.getX() == (float) 0) {
+                        Log.d("test end game", "congratulation");
+                        SuccessDialog mdialog = new SuccessDialog();
+                        mdialog.show(mActivity.getSupportFragmentManager(), "Success");
+                    }
+            }
+            if (v2.getId() == R.id.caocao) {
+                if (v2.getBottom() == mlayout.getBottom())
+                    if (v2.getRight() == mlayout.getWidth()) {
+                        Log.d("test end game", "congratulation");
+                        SuccessDialog mdialog = new SuccessDialog();
+                        mdialog.show(mActivity.getSupportFragmentManager(), "Success");
+                    }
+            }
         }
+
     }
 
     void swap_view_verticlly(View v1, View v2) {
@@ -227,32 +247,32 @@ public class OnTouchListener implements View.OnTouchListener {
             v1 = v2;
             v2 = tampv;
         }
-        if(is_two_column(v2)){
-            v1_1 = mlayout.getChildAt(from+1);
-        } else if (is_two_column(v1)){
-            v2_1 = mlayout.getChildAt(to+1);
+        if (is_two_column(v2)) {
+            v1_1 = mlayout.getChildAt(from + 1);
+        } else if (is_two_column(v1)) {
+            v2_1 = mlayout.getChildAt(to + 1);
         }
         if (is_two_row(v2)) {
             float the_y = NULL;
-            for (int i = mlayout.indexOfChild(v2) + 1; i < mlayout.getChildCount(); i++) {
-                if(the_y != NULL){
-                    if(the_y < mlayout.getChildAt(i).getY()){
+            for (int i = mlayout.indexOfChild(v2) + 1; i < mlayout.getChildCount(); i++) {//找下一层然后交换
+                if (the_y != NULL) {
+                    if (the_y < mlayout.getChildAt(i).getY()) {
                         mlayout.removeView(v1);
                         mlayout.removeView(v2);
                         mlayout.addView(v2, from);
                         mlayout.addView(v1, to);
-                        if(v1_1!=null){
+                        if (v1_1 != null) {
                             mlayout.removeView(v1_1);
                             mlayout.addView(v1_1, to);
                         }
-                        if(v2_1!=null){
+                        if (v2_1 != null) {
                             mlayout.removeView(v2_1);
-                            mlayout.addView(v2_1, from+1);
+                            mlayout.addView(v2_1, from + 1);
                         }
                         return;
                     }
                 }
-                if(mlayout.getChildAt(i).getY()==v2.getY()){
+                if (mlayout.getChildAt(i).getY() == v2.getY()) {
                     to++;
                     continue;
                 } else {
@@ -263,13 +283,13 @@ public class OnTouchListener implements View.OnTouchListener {
                     mlayout.removeView(v2);
                     mlayout.addView(v2, from);
                     mlayout.addView(v1, to);
-                    if(v1_1!=null){
+                    if (v1_1 != null) {
                         mlayout.removeView(v1_1);
                         mlayout.addView(v1_1, to);
                     }
-                    if(v2_1!=null){
+                    if (v2_1 != null) {
                         mlayout.removeView(v2_1);
-                        mlayout.addView(v2_1, from+1);
+                        mlayout.addView(v2_1, from + 1);
                     }
                     return;
                 }
@@ -278,29 +298,38 @@ public class OnTouchListener implements View.OnTouchListener {
         }
         if (is_two_row(v1)) {
             float the_y = NULL;
-            for (int i = mlayout.indexOfChild(v2) - 1; i >= 0; i--) {
-                if(the_y != NULL){
-                    if(the_y > mlayout.getChildAt(i).getY()){
+            for (int i = mlayout.indexOfChild(v2) - 1; i >= 0; i--) {//找上一层然后交换
+                if (the_y != NULL) {
+                    if (the_y > mlayout.getChildAt(i).getY()) {
                         mlayout.removeView(v1);
                         mlayout.removeView(v2);
                         mlayout.addView(v2, from);
                         mlayout.addView(v1, to);
-                        if(v1_1!=null){
+                        if (v1_1 != null) {
                             mlayout.removeView(v1_1);
                             mlayout.addView(v1_1, to);
                         }
-                        if(v2_1!=null){
+                        if (v2_1 != null) {
                             mlayout.removeView(v2_1);
-                            mlayout.addView(v2_1, from+1);
+                            mlayout.addView(v2_1, from + 1);
+                        }
+                        if (v1.getId() == R.id.caocao) {
+                            if (v1.getBottom() + mlayout.getHeight() / (float) 5 >= mlayout.getBottom()) {
+                                if (v1.getX() != 0 && v1.getRight() != mlayout.getWidth()) {
+                                    Log.d("test end game", "congratulation");
+                                    SuccessDialog mdialog = new SuccessDialog();
+                                    mdialog.show(mActivity.getSupportFragmentManager(), "Success");
+                                }
+                            }
                         }
                         return;
                     } else {
-                        if(is_two_column(v1)){
+                        if (is_two_column(v1)) {
                             to++;
                         }
                     }
                 }
-                if(mlayout.getChildAt(i).getY()==v2.getY()){
+                if (mlayout.getChildAt(i).getY() == v2.getY()) {
                     to--;
                     continue;
                 } else {
@@ -311,35 +340,54 @@ public class OnTouchListener implements View.OnTouchListener {
                     mlayout.removeView(v2);
                     mlayout.addView(v2, from);
                     mlayout.addView(v1, to);
-                    if(v1_1!=null){
+                    if (v1_1 != null) {
                         mlayout.removeView(v1_1);
                         mlayout.addView(v1_1, to);
                     }
-                    if(v2_1!=null){
+                    if (v2_1 != null) {
                         mlayout.removeView(v2_1);
-                        mlayout.addView(v2_1, from+1);
+                        mlayout.addView(v2_1, from + 1);
+                    }
+                    if (v1.getId() == R.id.caocao) {
+                        if (v1.getBottom() + mlayout.getHeight() / (float) 5 >= mlayout.getBottom()) {
+                            if (v1.getX() != 0 && v1.getRight() != mlayout.getWidth()) {
+                                Log.d("test end game", "congratulation");
+                                SuccessDialog mdialog = new SuccessDialog();
+                                mdialog.show(mActivity.getSupportFragmentManager(), "Success");
+                            }
+                        }
                     }
                     return;
                 }
                 to--;
             }
         }
-        
+
         mlayout.removeView(v1);
         mlayout.removeView(v2);
         mlayout.addView(v2, from);
         mlayout.addView(v1, to);
-        if(v1_1!=null){
+        if (v1_1 != null) {
             mlayout.removeView(v1_1);
             mlayout.addView(v1_1, to);
         }
-        if(v2_1!=null){
+        if (v2_1 != null) {
             mlayout.removeView(v2_1);
-            mlayout.addView(v2_1, from+1);
+            mlayout.addView(v2_1, from + 1);
+        }
+        if (v1.getId() == R.id.caocao) {
+            if (v1.getBottom() + mlayout.getHeight() / (float) 5 >= mlayout.getBottom()) {
+                if (v1.getX() != 0 && v1.getRight() != mlayout.getWidth()) {
+                    Log.d("test end game", "congratulation");
+                    SuccessDialog mdialog = new SuccessDialog();
+                    mdialog.show(mActivity.getSupportFragmentManager(), "Success");
+                }
+            }
         }
     }
+
     boolean is_all_white(View t1, View t2) {
-        if(t1==null||t2==null){
+        if (t1 == null || t2 == null) {
             return false;
         }
         if (t1.getId() == R.id.white1 || t1.getId() == R.id.white2) {
@@ -359,15 +407,15 @@ public class OnTouchListener implements View.OnTouchListener {
             Log.d("edge", "是边界");
             return;
         }
-        for(int i = from + 1; i < mlayout.getChildCount(); i++){
-            if(mlayout.getChildAt(i).getX()>v.getX()){
+        for (int i = from + 1; i < mlayout.getChildCount(); i++) {
+            if (mlayout.getChildAt(i).getX() > v.getX()) {
                 to = i;
                 break;
             }
         }
         View target1 = mlayout.getChildAt(to);
         View target2 = find_down(target1);
-        if(target2==null){
+        if (target2 == null) {
             target2 = find_up(target1);
         }
         if (is_all_white(target1, target2)) {
@@ -381,8 +429,8 @@ public class OnTouchListener implements View.OnTouchListener {
             Log.d("edge", "是边界");
             return;
         }
-        for(int i = from + 1; i < mlayout.getChildCount(); i++){
-            if(mlayout.getChildAt(i).getX()>v.getX()){
+        for (int i = from + 1; i < mlayout.getChildCount(); i++) {
+            if (mlayout.getChildAt(i).getX() > v.getX()) {
                 to = i;
                 break;
             }
@@ -398,15 +446,15 @@ public class OnTouchListener implements View.OnTouchListener {
             Log.d("edge", "是边界");
             return;
         }
-        for(int i = from - 1; i >= 0; i--){
-            if(mlayout.getChildAt(i).getX()<v.getX()){
+        for (int i = from - 1; i >= 0; i--) {
+            if (mlayout.getChildAt(i).getX() < v.getX()) {
                 to = i;
                 break;
             }
         }
         View target1 = mlayout.getChildAt(to);
         View target2 = find_down(target1);
-        if(target2 == null){
+        if (target2 == null) {
             target2 = find_up(target1);
         }
         if (is_all_white(target1, target2)) {
@@ -420,8 +468,8 @@ public class OnTouchListener implements View.OnTouchListener {
             Log.d("edge", "是边界");
             return;
         }
-        for(int i = from - 1; i >= 0; i--){
-            if(mlayout.getChildAt(i).getX()<v.getX()){
+        for (int i = from - 1; i >= 0; i--) {
+            if (mlayout.getChildAt(i).getX() < v.getX()) {
                 to = i;
                 break;
             }
@@ -441,6 +489,7 @@ public class OnTouchListener implements View.OnTouchListener {
         View targit2 = mlayout.getChildAt(mlayout.indexOfChild(targit1) + 1);
         if (is_all_white(targit1, targit2)) {
             to = mlayout.indexOfChild(targit1);
+            swap_view_verticlly(v, targit1);
         }
     }
 
@@ -452,7 +501,7 @@ public class OnTouchListener implements View.OnTouchListener {
             return;
         }
         View targit = find_down(v);
-        if(targit==null){
+        if (targit == null) {
             return;
         }
         if (targit.getId() == R.id.white1 || targit.getId() == R.id.white2) {
@@ -472,7 +521,7 @@ public class OnTouchListener implements View.OnTouchListener {
 
         if (is_all_white(targit1, targit2)) {
             to = mlayout.indexOfChild(targit1);
-                swap_view_verticlly(v, targit1);
+            swap_view_verticlly(v, targit1);
         }
     }
 
@@ -484,7 +533,7 @@ public class OnTouchListener implements View.OnTouchListener {
             return;
         }
         View targit = find_up(v);
-        if(targit==null){
+        if (targit == null) {
             return;
         }
 //        Log.d("find up test", Integer.toString(mlayout.indexOfChild(targit)));
