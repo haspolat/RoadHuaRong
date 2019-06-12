@@ -298,44 +298,67 @@ public class OnTouchListener implements View.OnTouchListener {
         }
         if (is_two_row(v1)) {
             float the_y = NULL;
+//            if(is_two_column(v1)){
+//                to++;
+//            }
             for (int i = mlayout.indexOfChild(v2) - 1; i >= 0; i--) {//找上一层然后交换
-                if (the_y != NULL) {
-                    if (the_y > mlayout.getChildAt(i).getY()) {
-                        mlayout.removeView(v1);
-                        mlayout.removeView(v2);
-                        mlayout.addView(v2, from);
-                        mlayout.addView(v1, to);
-                        if (v1_1 != null) {
-                            mlayout.removeView(v1_1);
-                            mlayout.addView(v1_1, to);
-                        }
-                        if (v2_1 != null) {
-                            mlayout.removeView(v2_1);
-                            mlayout.addView(v2_1, from + 1);
-                        }
-                        if (v1.getId() == R.id.caocao) {
-                            if (v1.getBottom() + mlayout.getHeight() / (float) 5 >= mlayout.getBottom()) {
-                                if (v1.getX() != 0 && v1.getRight() != mlayout.getWidth()) {
-                                    Log.d("test end game", "congratulation");
-                                    SuccessDialog mdialog = new SuccessDialog();
-                                    mdialog.show(mActivity.getSupportFragmentManager(), "Success");
-                                }
-                            }
-                        }
-                        return;
-                    } else {
-                        if (is_two_column(v1)) {
-                            to++;
-                        }
-                    }
-                }
+                Log.d("test vertical the_y", Integer.toString(to));
                 if (mlayout.getChildAt(i).getY() == v2.getY()) {
                     to--;
                     continue;
                 } else {
-                    the_y = mlayout.getChildAt(i).getY();
+//                    the_y = mlayout.getChildAt(i).getY();
+                    the_y = v1.getY() + v1.getHeight()/2 - 1;//层级判断有误
+                    Log.d("test vertical the_y", Float.toString(the_y));
                 }
-                if (v1.getX() >= mlayout.getChildAt(i).getX()) {
+                if (the_y != NULL) {//第一层检查完，检查上一层，只需要检查到上一层
+//                    if(is_two_column(v1)){
+//                        to++;
+//                    }
+                    if (!is_same_level(the_y, mlayout.getChildAt(i).getY())&&i!=from) {
+                        Log.d("test vertical y", Float.toString(mlayout.getChildAt(i).getY()));
+                        to++;
+//                        mlayout.removeView(v1);
+//                        mlayout.removeView(v2);
+//                        mlayout.addView(v2, from);
+//                        mlayout.addView(v1, to);
+//                        if (v1_1 != null) {
+//                            mlayout.removeView(v1_1);
+//                            mlayout.addView(v1_1, to);
+//                        }
+//                        if (v2_1 != null) {
+//                            mlayout.removeView(v2_1);
+//                            mlayout.addView(v2_1, from + 1);
+//                        }
+//                        if (v1.getId() == R.id.caocao) {
+//                            if (v1.getBottom() + mlayout.getHeight() / (float) 5 >= mlayout.getBottom()) {
+//                                if (v1.getX() != 0 && v1.getRight() != mlayout.getWidth()) {
+//                                    Log.d("test end game", "congratulation");
+//                                    SuccessDialog mdialog = new SuccessDialog();
+//                                    mdialog.show(mActivity.getSupportFragmentManager(), "Success");
+//                                }
+//                            }
+//                        }
+//                        return;
+                    }
+//                    } else {
+//                        if (is_two_column(v1)) {
+//                            to++;
+//                        }
+//                    }
+                }
+//                if (mlayout.getChildAt(i).getY() == v2.getY()) {
+//                    to--;
+//                    continue;
+//                } else {
+////                    the_y = mlayout.getChildAt(i).getY();
+//                    the_y = v1.getY() + v1.getHeight()/2 - 1;//层级判断有误
+//                    Log.d("test vertical the_y", Float.toString(the_y));
+//                }
+                if(v1.getX()>mlayout.getChildAt(i).getX()){
+                    to++;
+                }
+                if (is_same_level(v1.getX(), mlayout.getChildAt(i).getX())) {
                     mlayout.removeView(v1);
                     mlayout.removeView(v2);
                     mlayout.addView(v2, from);
@@ -362,7 +385,6 @@ public class OnTouchListener implements View.OnTouchListener {
                 to--;
             }
         }
-
         mlayout.removeView(v1);
         mlayout.removeView(v2);
         mlayout.addView(v2, from);
@@ -561,6 +583,20 @@ public class OnTouchListener implements View.OnTouchListener {
             }
         }
         return null;
+    }
+
+    boolean is_same_level(float y1, float y2){
+        if(y1<y2){
+            float tamp = y1;
+            y1 = y2;
+            y2 = tamp;
+        }
+//        if(y1 - y2 <= (float)50){
+//            return true;
+//        } else {
+//            return false;
+//        }
+        return y1 - y2 <= (float)50;
     }
 
     boolean is_two_column(View v) {
