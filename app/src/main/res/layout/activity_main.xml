@@ -23,8 +23,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <!--<include layout="@layout/level1" />-->
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/score_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="@string/step_title_text"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/game_layout"
+        app:layout_constraintStart_toStartOf="@+id/game_layout" />
+
+    <TextView
+        android:id="@+id/score_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/score"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        app:layout_constraintBaseline_toBaselineOf="@+id/score_title"
+        app:layout_constraintStart_toEndOf="@+id/score_title" />
 
 
 </android.support.constraint.ConstraintLayout>

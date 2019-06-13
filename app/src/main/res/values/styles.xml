@@ -13,23 +13,61 @@
         <item name="android:layout_rowWeight">1</item>
         <item name="android:layout_columnWeight">1</item>
         <item name="android:layout_gravity">fill</item>
-        <item name="android:background">@color/colorPrimaryDark</item>
+        <item name="android:src">@drawable/sample2</item>
+        <item name="android:background">#20000000</item>
+    </style>
+
+    <style name="s1" parent="soldier">
+        <item name="android:src">@drawable/s1</item>
+    </style>
+
+    <style name="s2" parent="soldier">
+        <item name="android:src">@drawable/s2</item>
+    </style>
+
+    <style name="s3" parent="soldier">
+        <item name="android:src">@drawable/s3</item>
+    </style>
+
+    <style name="s4" parent="soldier">
+        <item name="android:src">@drawable/s4</item>
     </style>
 
     <style name="zhangfei">
         <item name="android:layout_rowWeight">2</item>
         <item name="android:layout_columnWeight">1</item>
         <item name="android:layout_rowSpan">2</item>
-        <item name="android:layout_gravity">fill_vertical</item>
-        <item name="android:background">@android:color/holo_red_light</item>
+        <item name="android:layout_gravity">fill</item>
+        <item name="android:background">#20000000</item>
+    </style>
+
+    <style name="z1" parent="zhangfei">
+        <item name="android:src">@drawable/z1</item>
+    </style>
+
+    <style name="z2" parent="zhangfei">
+        <item name="android:src">@drawable/z2</item>
+    </style>
+
+    <style name="z3" parent="zhangfei">
+        <item name="android:src">@drawable/z3</item>
+    </style>
+
+    <style name="z4" parent="zhangfei">
+        <item name="android:src">@drawable/z4</item>
+    </style>
+
+    <style name="z5" parent="zhangfei">
+        <item name="android:src">@drawable/z5</item>
     </style>
 
     <style name="guanyu">
         <item name="android:layout_columnSpan">2</item>
         <item name="android:layout_rowWeight">1</item>
         <item name="android:layout_columnWeight">2</item>
-        <item name="android:layout_gravity">fill_horizontal</item>
-        <item name="android:background">@color/colorPrimaryDark</item>
+        <item name="android:layout_gravity">fill</item>
+        <item name="android:src">@drawable/g1</item>
+        <item name="android:background">#20000000</item>
     </style>
 
     <style name="caocao">
@@ -38,7 +76,8 @@
         <item name="android:layout_rowWeight">2</item>
         <item name="android:layout_columnWeight">2</item>
         <item name="android:layout_gravity">fill</item>
-        <item name="android:background">@color/colorPrimaryDark</item>
+        <item name="android:src">@drawable/player</item>
+        <item name="android:background">#20000000</item>
     </style>
 
 

@@ -9,20 +9,44 @@
     android:rowCount="5">
 
     <ImageView
-        android:id="@+id/soldier1"
+        android:id="@+id/zhangfei1"
 
-        style="@style/s1" />
+        style="@style/z1" />
 
     <ImageView
         android:id="@+id/caocao"
 
         style="@style/caocao" />
 
+    <ImageView
+        android:id="@+id/zhangfei2"
+
+        style="@style/z2" />
+
+    <ImageView
+        android:id="@+id/zhangfei3"
+
+        style="@style/z3" />
+
+    <ImageView
+        android:id="@+id/zhangfei5"
+
+        style="@style/z4" />
 
     <ImageView
         android:id="@+id/soldier2"
-        style="@style/s2"
+        style="@style/s1"
         android:contentDescription="@string/soldier2_description" />
+
+    <ImageView
+        android:id="@+id/zhangfei4"
+
+        style="@style/z5" />
+
+    <ImageView
+        android:id="@+id/soldier1"
+
+        style="@style/s2" />
 
     <ImageView
         android:id="@+id/white1"
@@ -32,6 +56,7 @@
 
     <ImageView
         android:id="@+id/soldier3"
+
         style="@style/s3" />
 
     <ImageView
@@ -39,30 +64,6 @@
         style="@style/s4"
         android:contentDescription="@string/soldier2_description" />
 
-    <ImageView
-        android:id="@+id/guanyu"
-
-        style="@style/guanyu" />
-
-    <ImageView
-        android:id="@+id/zhangfei1"
-
-        style="@style/z2" />
-
-    <ImageView
-        android:id="@+id/zhangfei2"
-
-        style="@style/z1" />
-
-    <ImageView
-        android:id="@+id/zhangfei3"
-
-        style="@style/z3" />
-
-    <ImageView
-        android:id="@+id/zhangfei4"
-
-        style="@style/z4" />
 
     <ImageView
         android:id="@+id/white2"

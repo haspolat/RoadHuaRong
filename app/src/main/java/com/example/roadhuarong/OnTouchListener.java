@@ -4,6 +4,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.GridLayout;
+import android.widget.TextView;
 
 
 public class OnTouchListener implements View.OnTouchListener {
@@ -11,17 +12,18 @@ public class OnTouchListener implements View.OnTouchListener {
     float start_x, start_y, end_x, end_y;
     int from, to;
     GridLayout mlayout;
-    View view;
+    TextView score_text;
     MainActivity mActivity;
 
     OnTouchListener(MainActivity activity) {
         mActivity = activity;
+        score_text = activity.findViewById(R.id.score_value);
     }
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         int action = event.getActionMasked();
-        float margin = 30;
+        float margin = 50;
 //        View caocao = mlayout.findViewById(R.id.caocao);
         switch (action) {
             case MotionEvent.ACTION_DOWN:
@@ -40,6 +42,8 @@ public class OnTouchListener implements View.OnTouchListener {
 //                    Log.d("edge test", Float.toString(v.getX()));
                     int id = v.getId();
                     switch (id) {
+                        case (R.id.zhangfei5):
+                            two_row_to_right(v);
                         case (R.id.caocao):
                             two_row_to_right(v);
                             break;
@@ -82,6 +86,8 @@ public class OnTouchListener implements View.OnTouchListener {
                         Log.d("test orientation", "down");
                         int id = v.getId();
                         switch (id) {
+                            case (R.id.zhangfei5):
+                                one_column_to_down(v);
                             case (R.id.caocao):
                                 two_column_to_down(v);
                                 break;
@@ -120,6 +126,8 @@ public class OnTouchListener implements View.OnTouchListener {
                         Log.d("test orientation", "up");
                         int id = v.getId();
                         switch (id) {
+                            case (R.id.zhangfei5):
+                                one_column_to_up(v);
                             case (R.id.caocao):
                                 two_column_to_up(v);
                                 break;
@@ -157,6 +165,8 @@ public class OnTouchListener implements View.OnTouchListener {
                         Log.d("test orientation", "Left");
                         int id = v.getId();
                         switch (id) {
+                            case (R.id.zhangfei5):
+                                two_row_to_left(v);
                             case (R.id.caocao):
                                 two_row_to_left(v);
                                 break;
@@ -201,6 +211,7 @@ public class OnTouchListener implements View.OnTouchListener {
     }
 
     void swap_view_horizantally(View v1, View v2) {
+        int the_score = Integer.parseInt(score_text.getText().toString());
         if (from > to) {
             int tamp = from;
             from = to;
@@ -212,6 +223,9 @@ public class OnTouchListener implements View.OnTouchListener {
 //        Log.d("test left right", Float.toString(v1.getRight()));
 //        Log.d("test left right", Float.toString(v2.getLeft()));
         if (v1.getRight() == v2.getLeft()) {
+            the_score++;
+            String score = Integer.toString(the_score);
+            score_text.setText(score);
             mlayout.removeView(v1);
             mlayout.removeView(v2);
             mlayout.addView(v2, from);
@@ -237,6 +251,7 @@ public class OnTouchListener implements View.OnTouchListener {
     }
 
     void swap_view_verticlly(View v1, View v2) {
+        int the_score = Integer.parseInt(score_text.getText().toString());
         View v1_1 = null;
         View v2_1 = null;
         if (from > to) {
@@ -255,30 +270,50 @@ public class OnTouchListener implements View.OnTouchListener {
         if (is_two_row(v2)) {
             float the_y = NULL;
             for (int i = mlayout.indexOfChild(v2) + 1; i < mlayout.getChildCount(); i++) {//找下一层然后交换
-                if (the_y != NULL) {
-                    if (the_y < mlayout.getChildAt(i).getY()) {
-                        mlayout.removeView(v1);
-                        mlayout.removeView(v2);
-                        mlayout.addView(v2, from);
-                        mlayout.addView(v1, to);
-                        if (v1_1 != null) {
-                            mlayout.removeView(v1_1);
-                            mlayout.addView(v1_1, to);
-                        }
-                        if (v2_1 != null) {
-                            mlayout.removeView(v2_1);
-                            mlayout.addView(v2_1, from + 1);
-                        }
-                        return;
-                    }
-                }
+                Log.d("test vertical the_y", Integer.toString(to));
                 if (mlayout.getChildAt(i).getY() == v2.getY()) {
                     to++;
                     continue;
                 } else {
-                    the_y = mlayout.getChildAt(i).getY();
+//                    the_y = mlayout.getChildAt(i).getY();
+                    the_y = v1.getBottom() + v1.getHeight();//层级判断有误
+                    Log.d("test vertical the_y", Float.toString(the_y));
                 }
-                if (mlayout.getChildAt(i).getRight() >= v1.getRight()) {
+                if (the_y != NULL) {
+                    if (!is_same_level(the_y, mlayout.getChildAt(i).getY())&&!is_same_level(v1.getX(), mlayout.getChildAt(i).getX())) {
+                        Log.d("test vertical y", Float.toString(mlayout.getChildAt(i).getY()));
+                        to--;
+//                        the_score++;
+//                        String score = Integer.toString(the_score);
+//                        score_text.setText(score);
+//                        mlayout.removeView(v1);
+//                        mlayout.removeView(v2);
+//                        mlayout.addView(v2, from);
+//                        mlayout.addView(v1, to);
+//                        if (v1_1 != null) {
+//                            mlayout.removeView(v1_1);
+//                            mlayout.addView(v1_1, to);
+//                        }
+//                        if (v2_1 != null) {
+//                            mlayout.removeView(v2_1);
+//                            mlayout.addView(v2_1, from + 1);
+//                        }
+//                        return;
+                    }
+                }
+//                if (mlayout.getChildAt(i).getY() == v2.getY()) {
+//                    to++;
+//                    continue;
+//                } else {
+//                    the_y = mlayout.getChildAt(i).getY();
+//                }
+                if(v1.getX() < mlayout.getChildAt(i).getX()){
+                    to--;
+                }
+                if (is_same_level(v1.getX(), mlayout.getChildAt(i).getX())) {
+                    the_score++;
+                    String score = Integer.toString(the_score);
+                    score_text.setText(score);
                     mlayout.removeView(v1);
                     mlayout.removeView(v2);
                     mlayout.addView(v2, from);
@@ -308,14 +343,14 @@ public class OnTouchListener implements View.OnTouchListener {
                     continue;
                 } else {
 //                    the_y = mlayout.getChildAt(i).getY();
-                    the_y = v1.getY() + v1.getHeight()/2 - 1;//层级判断有误
+                    the_y = v1.getY() + v1.getHeight() / 2 - 1;//层级判断有误
                     Log.d("test vertical the_y", Float.toString(the_y));
                 }
                 if (the_y != NULL) {//第一层检查完，检查上一层，只需要检查到上一层
 //                    if(is_two_column(v1)){
 //                        to++;
 //                    }
-                    if (!is_same_level(the_y, mlayout.getChildAt(i).getY())&&i!=from) {
+                    if (!is_same_level(the_y, mlayout.getChildAt(i).getY()) && i != from) {
                         Log.d("test vertical y", Float.toString(mlayout.getChildAt(i).getY()));
                         to++;
 //                        mlayout.removeView(v1);
@@ -355,10 +390,13 @@ public class OnTouchListener implements View.OnTouchListener {
 //                    the_y = v1.getY() + v1.getHeight()/2 - 1;//层级判断有误
 //                    Log.d("test vertical the_y", Float.toString(the_y));
 //                }
-                if(v1.getX()>mlayout.getChildAt(i).getX()){
+                if (v1.getX() > mlayout.getChildAt(i).getX()) {
                     to++;
                 }
                 if (is_same_level(v1.getX(), mlayout.getChildAt(i).getX())) {
+                    the_score++;
+                    String score = Integer.toString(the_score);
+                    score_text.setText(score);
                     mlayout.removeView(v1);
                     mlayout.removeView(v2);
                     mlayout.addView(v2, from);
@@ -385,6 +423,9 @@ public class OnTouchListener implements View.OnTouchListener {
                 to--;
             }
         }
+        the_score++;
+        String score = Integer.toString(the_score);
+        score_text.setText(score);
         mlayout.removeView(v1);
         mlayout.removeView(v2);
         mlayout.addView(v2, from);
@@ -430,7 +471,7 @@ public class OnTouchListener implements View.OnTouchListener {
             return;
         }
         for (int i = from + 1; i < mlayout.getChildCount(); i++) {
-            if (mlayout.getChildAt(i).getX() > v.getX()) {
+            if (is_same_level(v.getRight(), mlayout.getChildAt(i).getX())) {
                 to = i;
                 break;
             }
@@ -452,7 +493,7 @@ public class OnTouchListener implements View.OnTouchListener {
             return;
         }
         for (int i = from + 1; i < mlayout.getChildCount(); i++) {
-            if (mlayout.getChildAt(i).getX() > v.getX()) {
+            if (is_same_level(v.getRight(), mlayout.getChildAt(i).getX()) && is_same_level(v.getBottom(), mlayout.getChildAt(i).getBottom())) {
                 to = i;
                 break;
             }
@@ -469,7 +510,7 @@ public class OnTouchListener implements View.OnTouchListener {
             return;
         }
         for (int i = from - 1; i >= 0; i--) {
-            if (mlayout.getChildAt(i).getX() < v.getX()) {
+            if (is_same_level(mlayout.getChildAt(i).getRight(), v.getX())) {
                 to = i;
                 break;
             }
@@ -491,7 +532,7 @@ public class OnTouchListener implements View.OnTouchListener {
             return;
         }
         for (int i = from - 1; i >= 0; i--) {
-            if (mlayout.getChildAt(i).getX() < v.getX()) {
+            if (is_same_level(mlayout.getChildAt(i).getRight(), v.getX()) && is_same_level(v.getBottom(), mlayout.getChildAt(i).getBottom())) {
                 to = i;
                 break;
             }
@@ -585,8 +626,8 @@ public class OnTouchListener implements View.OnTouchListener {
         return null;
     }
 
-    boolean is_same_level(float y1, float y2){
-        if(y1<y2){
+    boolean is_same_level(float y1, float y2) {
+        if (y1 < y2) {
             float tamp = y1;
             y1 = y2;
             y2 = tamp;
@@ -596,7 +637,7 @@ public class OnTouchListener implements View.OnTouchListener {
 //        } else {
 //            return false;
 //        }
-        return y1 - y2 <= (float)50;
+        return y1 - y2 <= (float) 50;
     }
 
     boolean is_two_column(View v) {
@@ -619,6 +660,8 @@ public class OnTouchListener implements View.OnTouchListener {
             case R.id.zhangfei3:
                 return false;
             case R.id.zhangfei4:
+                return false;
+            case R.id.zhangfei5:
                 return false;
             case R.id.guanyu:
                 return true;
@@ -647,6 +690,8 @@ public class OnTouchListener implements View.OnTouchListener {
             case R.id.zhangfei3:
                 return true;
             case R.id.zhangfei4:
+                return true;
+            case R.id.zhangfei5:
                 return true;
             case R.id.guanyu:
                 return false;

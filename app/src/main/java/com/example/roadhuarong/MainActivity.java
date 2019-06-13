@@ -9,9 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
 
+import java.security.PublicKey;
+
 
 public class MainActivity extends AppCompatActivity {
-
+    public int step = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +26,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case 1:
                 inflater.inflate(R.layout.level2, (ViewGroup) findViewById(R.id.game_layout));
+                break;
+            case 2:
+                inflater.inflate(R.layout.level3, (ViewGroup) findViewById(R.id.game_layout));
                 break;
             default:
                 Log.d("test intent", "err in intent");

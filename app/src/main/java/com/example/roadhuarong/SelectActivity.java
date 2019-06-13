@@ -22,6 +22,9 @@ public static final String LEVEL_EXTRA = "com.example.roadhuarong.extra.MESSAGE"
             case R.id.level2_button:
                 intent.putExtra(LEVEL_EXTRA, 1);
                 break;
+            case R.id.level3_button:
+                intent.putExtra(LEVEL_EXTRA, 2);
+                break;
                 default:
                     return;
         }

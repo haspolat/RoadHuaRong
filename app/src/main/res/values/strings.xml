@@ -3,4 +3,9 @@
     <string name="soldier1_description">soldier1</string>
     <string name="soldier2_description">soldier2 description</string>
     <string name="success_button_text">确定</string>
+    <string name="game_title">火影华容道</string>
+    <string name="level_select_title">选择关卡</string>
+    <string name="success_message">恭喜获得胜利，宇智波鼬已达目的地！</string>
+    <string name="step_title_text">步数</string>
+    <string name="score">0</string>
 </resources>
